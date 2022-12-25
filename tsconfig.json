@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "target": "es2018",
+      "lib": ["es6"],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "noFallthroughCasesInSwitch": true,
+      "module": "esnext",
+      "noImplicitAny": true,
+      "sourceMap": true,
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "rootDir": "./src",
+      "isolatedModules": true,
+      "outDir": "./build",
+      "jsx": "react-jsx",
+      "baseUrl": "./src"
+    },
+    "include": ["src", "src/index.ts"],
+    "exclude": ["node_modules"],
+    "ts-node": {"esm": true}
+  }

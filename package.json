@@ -1,0 +1,31 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "node ./src/utils/index.js && npx tsc",
+    "format": "npx eslint ./src --fix",
+    "lint": "eslint \"./**/*.{js,ts}\" --max-warnings=0 .",
+    "start:dev": "nodemon ./src/index.ts",
+    "start:prod": "npm run build && node build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psycho0sis/CRUD-API.git"
+  },
+  "author": "Ilona Kosko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/psycho0sis/CRUD-API/issues"
+  },
+  "homepage": "https://github.com/psycho0sis/CRUD-API#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "eslint": "^8.30.0",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.9.4"
+  }
+}

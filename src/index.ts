@@ -1,13 +1,13 @@
-import http from "http";
+import http from 'http';
 
 const server = http.createServer();
 
-server.on("request", (request, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
+server.on('request', (request, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(
     JSON.stringify({
-      data: "Hello World! Here I am",
-    })
+      data: 'Hello World! Here I am',
+    }),
   );
 });
 

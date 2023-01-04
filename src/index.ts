@@ -7,6 +7,7 @@ import { getRouter } from './utils/get-router.js';
 import { deleteDB } from './utils/delete-db.js';
 import { routes } from './routes/index.js';
 import { TKey } from './types/index.js';
+import { handlerError } from './utils/handle-server-error.js';
 
 dotenv.config();
 
@@ -21,14 +22,22 @@ const server = http.createServer(async (req, res) => {
 
     const currentRout = routes[key] || routes.default;
 
-    currentRout(req, res);
+    Promise.resolve(currentRout(req, res)).catch(() => handlerError(res));
   }
 });
 
-process.on('SIGINT', async () => {
+const finishServerWork = async () => {
   await deleteDB();
   server.close();
   process.exit();
+};
+
+process.on('SIGINT', async () => {
+  finishServerWork();
+});
+
+process.on('SIGTSTP', async () => {
+  finishServerWork();
 });
 
 server.listen(PORT, () => console.log(`Server started on port: ${PORT}`));

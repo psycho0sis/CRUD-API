@@ -1,14 +1,38 @@
+import * as dotenv from 'dotenv';
 import http from 'http';
+import { parse } from 'url';
+import process from "process";
 
-const server = http.createServer();
+import { getRouter } from './utils/get-router.js';
+import { deleteDB } from './utils/delete-db.js';
+import { routes } from './routes/index.js';
+import { TKey } from './types/index.js';
 
-server.on('request', (request, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(
-    JSON.stringify({
-      data: 'Hello World! Here I am',
-    }),
-  );
+dotenv.config();
+
+const PORT = process.env.PORT;
+
+const server = http.createServer(async (req, res) => {
+  const { url, method } = req;
+
+  if (url && method) {
+    const { pathname } = parse(url, true);
+    const key: TKey = getRouter(pathname, method);
+
+    const currentRout = routes[key] || routes.default;
+
+    currentRout(req, res);
+  }
 });
 
-server.listen(8000);
+process.on('SIGINT', async () => {
+  await deleteDB();
+  server.close();
+  process.exit();
+});
+
+server.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
+
+export {
+  server
+};

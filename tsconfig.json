@@ -20,7 +20,7 @@
       "jsx": "react-jsx",
       "baseUrl": "./src"
     },
-    "include": ["src", "src/index.ts"],
+    "include": ["**/*.ts", "**/*.js"],
     "exclude": ["node_modules"],
     "ts-node": {"esm": true}
   }

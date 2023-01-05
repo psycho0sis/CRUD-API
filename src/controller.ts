@@ -1,7 +1,7 @@
 import path from "path";
 import { readFile } from 'fs/promises';
 
-import { __dirname} from "./constants.js";
+import { __dirname} from "./constants";
 
 
 class Controller {

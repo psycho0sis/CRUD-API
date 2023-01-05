@@ -3,11 +3,11 @@ import http from 'http';
 import { parse } from 'url';
 import process from "process";
 
-import { getRouter } from './utils/get-router.js';
-import { deleteDB } from './utils/delete-db.js';
-import { routes } from './routes/index.js';
-import { TKey } from './types/index.js';
-import { handlerError } from './utils/handle-server-error.js';
+import { getRouter } from './utils/get-router';
+import { deleteDB } from './utils/delete-db';
+import { routes } from './routes';
+import { TKey } from './types';
+import { handlerError } from './utils/handle-server-error';
 
 dotenv.config();
 

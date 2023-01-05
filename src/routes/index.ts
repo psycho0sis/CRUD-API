@@ -1,6 +1,6 @@
-import { DEFAULT_HEADER } from '../utils/default-header.js';
-import { user } from '../controller.js';
-import { Request, Response } from '../types/index.js';
+import { DEFAULT_HEADER } from '../utils/default-header';
+import { user } from '../controller';
+import { Request, Response } from '../types';
 
 export const routes = {
   "/api/users:get": async (req: Request, res: Response) => {

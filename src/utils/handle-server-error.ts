@@ -1,5 +1,5 @@
-import { Response } from '../types/index.js';
-import { DEFAULT_HEADER } from './default-header.js';
+import { Response } from '../types';
+import { DEFAULT_HEADER } from './default-header';
 
 export const handlerError = (res: Response) => {
   res.writeHead(500, DEFAULT_HEADER);

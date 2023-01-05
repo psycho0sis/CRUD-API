@@ -1,12 +1,9 @@
 import path from "path";
 import { readFile } from 'fs/promises';
 
-import { __dirname} from "./constants";
-
-
 class Controller {
   async getUsers() {
-    const pathToTheFile = path.join(__dirname, "../db.json");
+    const pathToTheFile = path.resolve(process.cwd(), "./db.json");
 
     try {
       const content = await readFile(pathToTheFile, { encoding: "utf8", flag: "a+" });

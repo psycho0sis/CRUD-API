@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals';
 import supertest from 'supertest';
 
-import { DEFAULT_HEADER } from '../utils/default-header';
+import { DEFAULT_HEADER, baseURL } from '../utils/constants';
 
 import { server, finishServerWorkForTest } from '..';
 
@@ -20,7 +20,7 @@ describe('CRUD API', () => {
     };
 
     const response = await request
-      .post('/api/users')
+      .post(baseURL)
       .set(DEFAULT_HEADER)
       .send({ user })
       .expect(201);
@@ -29,7 +29,7 @@ describe('CRUD API', () => {
   });
 
   test('Should answer with status code 200', async () => {
-    const response = await request.get('/api/users');
+    const response = await request.get(baseURL);
 
     expect(response.status).toBe(200);
   });

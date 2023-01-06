@@ -4,6 +4,7 @@ import { readFile } from 'fs/promises';
 
 import { Request, User, ResponseUser } from './types';
 import { updateDB } from './utils/update-db';
+import { getContentFromFile } from './utils/get-content-from-file';
 
 class Controller {
   async getUsers() {
@@ -31,11 +32,39 @@ class Controller {
       body += data;
     });
 
+
     req.on('end', async () => {
       const parsedData: ResponseUser = JSON.parse(body);
-      const user: User = { id: uuidv4(), ...parsedData };
-      await updateDB(user);
+      const user: User = {
+        id: uuidv4(), ...parsedData
+      };
+      const content = await getContentFromFile();
+      const users = content ? JSON.parse(content).concat(user) : [user];
+      await updateDB(users);
     });
+  }
+
+  async deleteUser(id: string) {
+    const content = await getContentFromFile();
+
+    if (content) {
+      const isUserExist = JSON.parse(content).find(
+        (user: User) => user.id === id,
+      );
+      const users: User[] = JSON.parse(content).filter(
+        (user: User) => user.id !== id,
+      );
+      await updateDB(users);
+
+      return new Promise((resolve, reject) => {
+        if (isUserExist) {
+          console.log('hi', users, isUserExist, id);
+          resolve(users);
+        } else {
+          reject(users);
+        }
+      });
+    }
   }
 
   // async getUser(id: number) {
@@ -62,17 +91,6 @@ class Controller {
   //     resolve(todo);
   //   });
   // }
-
-  //   async deleteUser(id: number){
-  //     return new Promise((resolve, reject) => {
-
-  //       const todo = data.find((user) => todo.id === parseInt(id));
-  //       if (!todo) {
-  //         reject(`No todo with id ${id} found`);
-  //       }
-  //       resolve(`Todo deleted successfully`);
-  //     });
-  //   }
 }
 
 export const user = new Controller();

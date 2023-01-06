@@ -26,10 +26,15 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-const finishServerWork = async () => {
+export const finishServerWork = async () => {
   await deleteDB();
   server.close();
   process.exit();
+};
+
+export const finishServerWorkForTest = async () => {
+  await deleteDB();
+  server.close();
 };
 
 process.on('SIGINT', async () => {

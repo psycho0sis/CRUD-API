@@ -57,7 +57,6 @@ class Controller {
 
       return new Promise((resolve, reject) => {
         if (isUserExist) {
-          console.log('hi', users, isUserExist, id);
           resolve(users);
         } else {
           reject(users);
@@ -66,19 +65,24 @@ class Controller {
     }
   }
 
-  // async getUser(id: number) {
-  //   const pathToTheFile = path.resolve(process.cwd(), "./db.json");
-  //   const content = JSON.parse(await readFile(pathToTheFile, { encoding: "utf8", flag: "a+" }));
+  async getUser(id: string) {
+    const content = await getContentFromFile();
+    
+    if (content) {
+      const user: User = JSON.parse(content).find(
+        (user: User) => user.id === id,
+      );
 
-  //   return new Promise((resolve, reject) => {
-  //     const user = content && content.find((user: User) => user.id === id);
-  //     if (user) {
-  //       resolve(user);
-  //     } else {
-  //       reject(`Todo with id ${id} not found `);
-  //     }
-  //   });
-  // }
+      return new Promise((resolve, reject) => {
+        if (user) {
+          resolve(user);
+          return user;
+        } else {
+          reject(user);
+        }
+      });
+    }
+  }
 
   // async updateUser(id: number) {
   //   return new Promise((resolve, reject) => {

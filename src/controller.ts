@@ -2,8 +2,7 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { readFile } from 'fs/promises';
 
-import { getContentFromFile } from './utils/get-content-from-file';
-import { updateDB } from './utils/update-db';
+import { getContentFromFile, updateDB } from './utils';
 import { Request, User, ResponseUser } from './types';
 
 class Controller {

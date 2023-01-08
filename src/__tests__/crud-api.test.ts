@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals';
 import supertest from 'supertest';
 
-import { DEFAULT_HEADER, baseURL } from '../utils/constants';
+import { DEFAULT_HEADER, baseURL } from '../utils';
 
 import { server, finishServerWorkForTest } from '..';
 

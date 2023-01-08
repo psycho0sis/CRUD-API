@@ -2,8 +2,7 @@ import * as dotenv from 'dotenv';
 import http from 'http';
 import process from "process";
 
-import { handlerError } from './utils/handle-server-error';
-import { deleteDB } from './utils/delete-db';
+import { deleteDB, handlerError } from './utils';
 import { routes } from './routes';
 
 dotenv.config();

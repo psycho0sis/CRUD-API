@@ -1,10 +1,13 @@
 import { parse } from 'url';
 
-import { baseURL, DEFAULT_HEADER, RESPONSE_MESSAGES } from '../utils/constants';
-import { uuidValidation } from '../utils/uuid-validation';
-import { Request, Response } from '../types';
-import { Methods, STATUS_CODES } from '../types';
+import { Request, Response, Methods, STATUS_CODES } from '../types';
 import { user } from '../controller';
+import {
+  baseURL,
+  DEFAULT_HEADER,
+  RESPONSE_MESSAGES,
+  uuidValidation,
+} from '../utils';
 
 export const routes = async (req: Request, res: Response) => {
   const { url, method } = req;

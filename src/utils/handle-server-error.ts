@@ -1,4 +1,5 @@
 import { Response } from '../types';
+
 import { DEFAULT_HEADER, RESPONSE_MESSAGES } from './constants';
 
 export const handlerError = (res: Response) => {

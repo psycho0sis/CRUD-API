@@ -1,6 +1,6 @@
 import http from 'http';
 
-import { routes } from 'routes';
+import { routes } from '../routes';
 
 export type TKey = keyof typeof routes;
 

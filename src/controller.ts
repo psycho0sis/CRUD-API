@@ -2,9 +2,9 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { readFile } from 'fs/promises';
 
-import { Request, User, ResponseUser } from './types';
-import { updateDB } from './utils/update-db';
 import { getContentFromFile } from './utils/get-content-from-file';
+import { updateDB } from './utils/update-db';
+import { Request, User, ResponseUser } from './types';
 
 class Controller {
   async getUsers() {

@@ -1,6 +1,6 @@
 import { parse } from 'url';
 
-import { baseURL, DEFAULT_HEADER } from '../utils/constants';
+import { baseURL, DEFAULT_HEADER, RESPONSE_MESSAGES } from '../utils/constants';
 import { uuidValidation } from '../utils/uuid-validation';
 import { Request, Response } from '../types';
 import { Methods, STATUS_CODES } from '../types';
@@ -8,6 +8,13 @@ import { user } from '../controller';
 
 export const routes = async (req: Request, res: Response) => {
   const { url, method } = req;
+  const {
+    USER_ADDED_TO_DATABASE,
+    USER_WAS_DELETED,
+    USER_NOT_FOUND,
+    USER_NOT_VALID,
+    ROUTE_NOT_FOUND,
+  } = RESPONSE_MESSAGES;
 
   if (url && method) {
     const { pathname } = parse(url, true);
@@ -24,27 +31,27 @@ export const routes = async (req: Request, res: Response) => {
 
       await user.addUser(req);
 
-      res.end(JSON.stringify({ message: 'User added to database' }));
+      res.end(JSON.stringify({ message: USER_ADDED_TO_DATABASE }));
     } else if (`${baseURL}/${id}` === pathname && method === Methods.DELETE) {
       if (id && uuidValidation(id)) {
         try {
           await user.deleteUser(id);
           res.writeHead(STATUS_CODES.NO_CONTENT, DEFAULT_HEADER);
 
-          res.end(JSON.stringify({ message: 'User was deleted' }));
+          res.end(JSON.stringify({ message: USER_WAS_DELETED }));
         } catch (err) {
           console.log(err);
           res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
-          res.end(JSON.stringify({ message: 'User not found' }));
+          res.end(JSON.stringify({ message: USER_NOT_FOUND }));
         }
       } else {
         res.writeHead(STATUS_CODES.BAD_REQUEST, DEFAULT_HEADER);
-        res.end(JSON.stringify({ message: 'UserId is not valid (not uuid)' }));
+        res.end(JSON.stringify({ message: USER_NOT_VALID }));
       }
     } else {
       res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
 
-      res.end(JSON.stringify({ message: 'Route not found' }));
+      res.end(JSON.stringify({ message: ROUTE_NOT_FOUND }));
     }
   }
 };

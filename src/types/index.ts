@@ -6,7 +6,9 @@ export type TKey = keyof typeof routes;
 
 export type Request = http.IncomingMessage;
 
-export type Response = http.ServerResponse<Request>;
+export type Response = http.ServerResponse<Request> & {
+  req: http.IncomingMessage;
+};
 
 export type ResponseUser = {
   username: string;
@@ -17,6 +19,18 @@ export type ResponseUser = {
 export type User = ResponseUser & {
   id: string;
 };
+
+type RoutesKeys = "GET_ALL_USERS" | "GET_ONE_USER" | "POST_NEW_USER" | "DELETE_USER";
+  
+type Routes = {
+  [key in RoutesKeys]: (req: Request, res: Response, id?: string) => Promise<void>;
+};
+
+type Default = {
+  DEFAULT: (req: Request, res: Response) => void
+}
+
+export type RoutesWithDefault = Routes & Default;
 
 export const enum Methods {
   GET = 'GET',

@@ -16,7 +16,11 @@ const {
   ROUTE_NOT_FOUND,
 } = RESPONSE_MESSAGES;
 
-export const getKeyForRoutes = (pathname: string, method: string, id?: string) => {
+export const getKeyForRoutes = (
+  pathname: string,
+  method: string,
+  id?: string,
+) => {
   if (baseURL === pathname && method === Methods.GET) {
     return 'GET_ALL_USERS';
   } else if (`${baseURL}/${id}` === pathname && method === Methods.GET) {
@@ -26,9 +30,9 @@ export const getKeyForRoutes = (pathname: string, method: string, id?: string) =
   } else if (`${baseURL}/${id}` === pathname && method === Methods.DELETE) {
     return 'DELETE_USER';
   } else if (`${baseURL}/${id}` === pathname && method === Methods.PUT) {
-    return 'UPDATE_USER'
+    return 'UPDATE_USER';
   }
-  return "DEFAULT";
+  return 'DEFAULT';
 };
 
 export const routes: RoutesWithDefault = {
@@ -95,5 +99,5 @@ export const routes: RoutesWithDefault = {
   DEFAULT: (req, res) => {
     res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
     res.end(JSON.stringify({ message: ROUTE_NOT_FOUND }));
-  }
+  },
 };

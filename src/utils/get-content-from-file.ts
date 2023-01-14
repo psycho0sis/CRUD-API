@@ -8,7 +8,6 @@ export const getContentFromFile = async () => {
       encoding: 'utf8',
       flag: 'a+',
     });
-    
   } catch (err) {
     console.error(err);
   }

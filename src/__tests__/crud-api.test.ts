@@ -29,10 +29,15 @@ describe('CRUD API', () => {
   });
 
   test('Should delete user', async () => {
-    const response = await request.delete(`${baseURL}/1`).set(DEFAULT_HEADER).expect(400);
-    
+    const response = await request
+      .delete(`${baseURL}/1`)
+      .set(DEFAULT_HEADER)
+      .expect(400);
+
     expect(response.status).toBe(400);
-    expect(JSON.parse(response.text).message).toBe('UserId is not valid (not uuid)');   
+    expect(JSON.parse(response.text).message).toBe(
+      'UserId is not valid (not uuid)',
+    );
   });
 
   test('Should answer with status code 200', async () => {
@@ -40,5 +45,4 @@ describe('CRUD API', () => {
 
     expect(response.status).toBe(200);
   });
-
 });

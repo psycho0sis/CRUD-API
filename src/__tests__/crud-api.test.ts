@@ -28,7 +28,7 @@ describe('CRUD API', () => {
     expect(response.status).toBe(201);
   });
 
-  test('Should delete user', async () => {
+  test('Should answer --UserId is not valid--', async () => {
     const response = await request
       .delete(`${baseURL}/1`)
       .set(DEFAULT_HEADER)

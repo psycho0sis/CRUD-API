@@ -20,22 +20,32 @@ export type User = ResponseUser & {
   id: string;
 };
 
-type RoutesKeys = "GET_ALL_USERS" | "GET_ONE_USER" | "POST_NEW_USER" | "DELETE_USER";
-  
+type RoutesKeys =
+  | 'GET_ALL_USERS'
+  | 'GET_ONE_USER'
+  | 'POST_NEW_USER'
+  | 'DELETE_USER'
+  | 'UPDATE_USER';
+
 type Routes = {
-  [key in RoutesKeys]: (req: Request, res: Response, id?: string) => Promise<void>;
+  [key in RoutesKeys]: (
+    req: Request,
+    res: Response,
+    id?: string,
+  ) => Promise<void>;
 };
 
 type Default = {
-  DEFAULT: (req: Request, res: Response) => void
-}
+  DEFAULT: (req: Request, res: Response) => void;
+};
 
 export type RoutesWithDefault = Routes & Default;
 
 export const enum Methods {
+  DELETE = 'DELETE',
   GET = 'GET',
   POST = 'POST',
-  DELETE = 'DELETE',
+  PUT = 'PUT',
 }
 
 export const enum STATUS_CODES {
@@ -44,5 +54,5 @@ export const enum STATUS_CODES {
   NO_CONTENT = 204,
   BAD_REQUEST = 400,
   NOT_FOUND = 404,
-  INTERNAL_SERVER_ERROR = 500
+  INTERNAL_SERVER_ERROR = 500,
 }

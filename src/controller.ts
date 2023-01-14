@@ -31,11 +31,12 @@ class Controller {
       body += data;
     });
 
-
     req.on('end', async () => {
       const parsedData: ResponseUser = JSON.parse(body);
+
       const user: User = {
-        id: uuidv4(), ...parsedData
+        id: uuidv4(),
+        ...parsedData,
       };
       const content = await getContentFromFile();
       const users = content ? JSON.parse(content).concat(user) : [user];
@@ -67,7 +68,7 @@ class Controller {
 
   async getUser(id: string) {
     const content = await getContentFromFile();
-    
+
     if (content) {
       const user: User = JSON.parse(content).find(
         (user: User) => user.id === id,
@@ -84,16 +85,42 @@ class Controller {
     }
   }
 
-  // async updateUser(id: number) {
-  //   return new Promise((resolve, reject) => {
-  //     const todo = data.find((user) => todo.id === parseInt(id));
-  //     if (!user) {
-  //       reject(`No user with id ${id} found`);
-  //     }
-  //     todo["completed"] = true;
-  //     resolve(todo);
-  //   });
-  // }
+  async updateUser(req: Request, id: string) {
+    return new Promise(async (resolve, reject) => {
+      const content = await getContentFromFile();
+
+      if (content) {
+        let body = '';
+
+        req.on('data', data => {
+          body += data;
+        });
+
+        let users: User[] = [];
+        let user: User | undefined = undefined;
+
+        req.on('end', async () => {
+          const parsedData: ResponseUser = JSON.parse(body);
+
+          user = JSON.parse(content).find((user: User) => user.id === id);
+
+          users = JSON.parse(content).map((user: User) => {
+            if (user.id === id) {
+              return { ...user, ...parsedData };
+            }
+            return user;
+          });
+
+          await updateDB(users);
+
+          if (user) {
+            resolve(users);
+          }
+          reject(users);
+        });
+      }
+    });
+  }
 }
 
 export const user = new Controller();

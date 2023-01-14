@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { readFile } from 'fs/promises';
 
 import { getContentFromFile, updateDB } from './utils';
-import { Request, User, ResponseUser } from './types';
+import { Controller, User, ResponseUser } from './types';
 
-class Controller {
+export const controller: Controller = {
   async getUsers() {
     const pathToTheFile = path.resolve(process.cwd(), './db.json');
     const content = await readFile(pathToTheFile, {
@@ -22,9 +22,9 @@ class Controller {
     } catch (err) {
       console.log(err);
     }
-  }
+  },
 
-  async addUser(req: Request) {
+  async addUser(req) {
     let body = '';
 
     req.on('data', data => {
@@ -42,9 +42,9 @@ class Controller {
       const users = content ? JSON.parse(content).concat(user) : [user];
       await updateDB(users);
     });
-  }
+  },
 
-  async deleteUser(id: string) {
+  async deleteUser(id) {
     const content = await getContentFromFile();
 
     if (content) {
@@ -64,9 +64,9 @@ class Controller {
         }
       });
     }
-  }
+  },
 
-  async getUser(id: string) {
+  async getUser(id) {
     const content = await getContentFromFile();
 
     if (content) {
@@ -83,9 +83,9 @@ class Controller {
         }
       });
     }
-  }
+  },
 
-  async updateUser(req: Request, id: string) {
+  async updateUser(req, id) {
     return new Promise(async (resolve, reject) => {
       const content = await getContentFromFile();
 
@@ -121,6 +121,4 @@ class Controller {
       }
     });
   }
-}
-
-export const user = new Controller();
+};

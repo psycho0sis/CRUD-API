@@ -1,5 +1,6 @@
 import http from 'http';
 
+import { RESPONSE_MESSAGES, STATUS_CODES } from '../utils';
 import { routes } from '../routes';
 
 export type TKey = keyof typeof routes;
@@ -48,11 +49,17 @@ export const enum Methods {
   PUT = 'PUT',
 }
 
-export const enum STATUS_CODES {
-  SUCCESS = 200,
-  CREATED_SUCCESS = 201,
-  NO_CONTENT = 204,
-  BAD_REQUEST = 400,
-  NOT_FOUND = 404,
-  INTERNAL_SERVER_ERROR = 500,
+export type Message = keyof typeof RESPONSE_MESSAGES;
+
+export type StatusCodeKeys = keyof typeof STATUS_CODES;
+
+
+export type StatusCode = typeof STATUS_CODES[StatusCodeKeys];
+
+export interface Controller {
+  getUsers(): Promise<User>,
+  addUser(req: Request): void,
+  deleteUser(id: string): Promise<User[] | undefined>,
+  getUser(id: string): Promise<User | undefined>,
+  updateUser(req: Request, id: string): Promise<User[] | undefined>,
 }

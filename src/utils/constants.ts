@@ -15,3 +15,12 @@ export const RESPONSE_MESSAGES = {
   USER_WAS_UPDATED: 'User was updated',
   ROUTE_NOT_FOUND: 'Route not found',
 };
+
+export const STATUS_CODES = {
+  SUCCESS: 200,
+  CREATED_SUCCESS: 201,
+  NO_CONTENT: 204,
+  BAD_REQUEST: 400,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500,
+} as const;

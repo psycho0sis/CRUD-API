@@ -1,9 +1,10 @@
-import { STATUS_CODES, RoutesWithDefault, Methods } from '../types';
-import { user } from '../controller';
+import { RoutesWithDefault, Methods } from '../types';
+import { controller } from '../controller';
 import {
   baseURL,
   DEFAULT_HEADER,
   RESPONSE_MESSAGES,
+  STATUS_CODES,
   uuidValidation,
 } from '../utils';
 
@@ -37,7 +38,7 @@ export const getKeyForRoutes = (
 
 export const routes: RoutesWithDefault = {
   GET_ALL_USERS: async (req, res) => {
-    const users = await user.getUsers();
+    const users = await controller.getUsers();
 
     res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
     res.end(JSON.stringify(users));
@@ -45,7 +46,7 @@ export const routes: RoutesWithDefault = {
   GET_ONE_USER: async (req, res, id) => {
     if (id && uuidValidation(id)) {
       try {
-        const result = await user.getUser(id);
+        const result = await controller.getUser(id);
 
         res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
         res.end(JSON.stringify(result));
@@ -59,7 +60,7 @@ export const routes: RoutesWithDefault = {
     }
   },
   POST_NEW_USER: async (req, res) => {
-    await user.addUser(req);
+    await controller.addUser(req);
 
     res.writeHead(STATUS_CODES.CREATED_SUCCESS, DEFAULT_HEADER);
     res.end(JSON.stringify({ message: USER_ADDED_TO_DATABASE }));
@@ -67,7 +68,7 @@ export const routes: RoutesWithDefault = {
   DELETE_USER: async (req, res, id) => {
     if (id && uuidValidation(id)) {
       try {
-        await user.deleteUser(id);
+        await controller.deleteUser(id);
 
         res.writeHead(STATUS_CODES.NO_CONTENT, DEFAULT_HEADER);
         res.end(JSON.stringify({ message: USER_WAS_DELETED }));
@@ -83,7 +84,7 @@ export const routes: RoutesWithDefault = {
   UPDATE_USER: async (req, res, id) => {
     if (id && uuidValidation(id)) {
       try {
-        await user.updateUser(req, id);
+        await controller.updateUser(req, id);
 
         res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
         res.end(JSON.stringify({ message: USER_WAS_UPDATED }));

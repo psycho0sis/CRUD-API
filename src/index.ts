@@ -3,8 +3,13 @@ import process from 'process';
 import { parse } from 'url';
 import http from 'http';
 
-import { deleteDB, handlerError } from './utils';
+import { DEFAULT_HEADER, deleteDB, handlerError, RESPONSE_MESSAGES, STATUS_CODES, uuidValidation } from './utils';
 import { getKeyForRoutes, routes } from './routes';
+import { RoutesWithDefault } from './types';
+
+const {
+  USER_NOT_VALID,
+} = RESPONSE_MESSAGES;
 
 dotenv.config();
 
@@ -16,11 +21,20 @@ const server = http.createServer(async (req, res) => {
     const { pathname } = parse(url, true);
     const id = pathname?.split('/')[3];
 
-    const key = id
-      ? getKeyForRoutes(pathname, method, id)
-      : getKeyForRoutes(pathname!, method);
+    let key: keyof RoutesWithDefault;
 
-    const currentRout = routes[key];
+    if (id) {
+      if (uuidValidation(id)) {
+        key = getKeyForRoutes(pathname, method, id);
+      } else {
+        res.writeHead(STATUS_CODES.BAD_REQUEST, DEFAULT_HEADER);
+        return res.end(JSON.stringify({ message: USER_NOT_VALID }));
+      }
+    } else {
+      key = getKeyForRoutes(pathname!, method);
+    }
+
+    const currentRout = key && routes[key];
 
     Promise.resolve(
       id ? currentRout(req, res, id) : currentRout(req, res),

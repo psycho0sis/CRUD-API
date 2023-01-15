@@ -5,7 +5,6 @@ import {
   DEFAULT_HEADER,
   RESPONSE_MESSAGES,
   STATUS_CODES,
-  uuidValidation,
 } from '../utils';
 
 const {
@@ -45,9 +44,8 @@ export const routes: RoutesWithDefault = {
     res.end(JSON.stringify(users));
   },
   GET_ONE_USER: async (req, res, id) => {
-    if (id && uuidValidation(id)) {
       try {
-        const result = await controller.getUser(id);
+        const result = id && await controller.getUser(id);
 
         res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
         result && res.end(JSON.stringify(result));
@@ -55,10 +53,6 @@ export const routes: RoutesWithDefault = {
         res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
         res.end(JSON.stringify({ message: USER_NOT_FOUND }));
       }
-    } else {
-      res.writeHead(STATUS_CODES.BAD_REQUEST, DEFAULT_HEADER);
-      res.end(JSON.stringify({ message: USER_NOT_VALID }));
-    }
   },
   POST_NEW_USER: async (req, res) => {
     try {
@@ -71,9 +65,8 @@ export const routes: RoutesWithDefault = {
     }
   },
   DELETE_USER: async (req, res, id) => {
-    if (id && uuidValidation(id)) {
       try {
-        await controller.deleteUser(id);
+        id && await controller.deleteUser(id);
 
         res.writeHead(STATUS_CODES.NO_CONTENT, DEFAULT_HEADER);
         res.end(JSON.stringify({ message: USER_WAS_DELETED }));
@@ -81,15 +74,10 @@ export const routes: RoutesWithDefault = {
         res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
         res.end(JSON.stringify({ message: USER_NOT_FOUND }));
       }
-    } else {
-      res.writeHead(STATUS_CODES.BAD_REQUEST, DEFAULT_HEADER);
-      res.end(JSON.stringify({ message: USER_NOT_VALID }));
-    }
   },
   UPDATE_USER: async (req, res, id) => {
-    if (id && uuidValidation(id)) {
       try {
-        await controller.updateUser(req, id);
+        id && await controller.updateUser(req, id);
 
         res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
         res.end(JSON.stringify({ message: USER_WAS_UPDATED }));
@@ -97,10 +85,6 @@ export const routes: RoutesWithDefault = {
         res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
         res.end(JSON.stringify({ message: USER_NOT_FOUND }));
       }
-    } else {
-      res.writeHead(STATUS_CODES.BAD_REQUEST, DEFAULT_HEADER);
-      res.end(JSON.stringify({ message: USER_NOT_VALID }));
-    }
   },
   DEFAULT: (req, res) => {
     res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);

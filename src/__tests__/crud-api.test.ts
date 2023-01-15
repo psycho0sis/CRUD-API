@@ -43,10 +43,9 @@ describe('CRUD API', () => {
 
     expect(response.status).toBe(201);
 
-    const data = JSON.parse(await getContentFromFile() as string);
-    
-    const response2 = await request
-    .get(`${baseURL}/${data[0].id}`)
+    const data = JSON.parse((await getContentFromFile()) as string);
+
+    const response2 = await request.get(`${baseURL}/${data[0].id}`);
 
     expect(response2.status).toBe(200);
   });

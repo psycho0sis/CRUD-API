@@ -44,15 +44,15 @@ export const routes: RoutesWithDefault = {
     res.end(JSON.stringify(users));
   },
   GET_ONE_USER: async (req, res, id) => {
-      try {
-        const result = id && await controller.getUser(id);
+    try {
+      const result = id && (await controller.getUser(id));
 
-        res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
-        result && res.end(JSON.stringify(result));
-      } catch {
-        res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
-        res.end(JSON.stringify({ message: USER_NOT_FOUND }));
-      }
+      res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
+      result && res.end(JSON.stringify(result));
+    } catch {
+      res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
+      res.end(JSON.stringify({ message: USER_NOT_FOUND }));
+    }
   },
   POST_NEW_USER: async (req, res) => {
     try {
@@ -65,26 +65,26 @@ export const routes: RoutesWithDefault = {
     }
   },
   DELETE_USER: async (req, res, id) => {
-      try {
-        id && await controller.deleteUser(id);
+    try {
+      id && (await controller.deleteUser(id));
 
-        res.writeHead(STATUS_CODES.NO_CONTENT, DEFAULT_HEADER);
-        res.end(JSON.stringify({ message: USER_WAS_DELETED }));
-      } catch {
-        res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
-        res.end(JSON.stringify({ message: USER_NOT_FOUND }));
-      }
+      res.writeHead(STATUS_CODES.NO_CONTENT, DEFAULT_HEADER);
+      res.end(JSON.stringify({ message: USER_WAS_DELETED }));
+    } catch {
+      res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
+      res.end(JSON.stringify({ message: USER_NOT_FOUND }));
+    }
   },
   UPDATE_USER: async (req, res, id) => {
-      try {
-        id && await controller.updateUser(req, id);
+    try {
+      id && (await controller.updateUser(req, id));
 
-        res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
-        res.end(JSON.stringify({ message: USER_WAS_UPDATED }));
-      } catch {
-        res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
-        res.end(JSON.stringify({ message: USER_NOT_FOUND }));
-      }
+      res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
+      res.end(JSON.stringify({ message: USER_WAS_UPDATED }));
+    } catch {
+      res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
+      res.end(JSON.stringify({ message: USER_NOT_FOUND }));
+    }
   },
   DEFAULT: (req, res) => {
     res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);

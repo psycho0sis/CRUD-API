@@ -3,17 +3,22 @@ import process from 'process';
 import { parse } from 'url';
 import http from 'http';
 
-import { DEFAULT_HEADER, deleteDB, handlerError, RESPONSE_MESSAGES, STATUS_CODES, uuidValidation } from './utils';
-import { getKeyForRoutes, routes } from './routes';
-import { RoutesWithDefault } from './types';
-
-const {
-  USER_NOT_VALID,
-} = RESPONSE_MESSAGES;
-
 dotenv.config();
 
 const PORT = process.env.PORT;
+
+import {
+  DEFAULT_HEADER,
+  deleteDB,
+  handlerError,
+  RESPONSE_MESSAGES,
+  STATUS_CODES,
+  uuidValidation,
+} from './utils';
+import { getKeyForRoutes, routes } from './routes';
+import { RoutesWithDefault } from './types';
+
+const { USER_NOT_VALID } = RESPONSE_MESSAGES;
 
 const server = http.createServer(async (req, res) => {
   const { url, method } = req;

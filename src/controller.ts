@@ -94,7 +94,7 @@ export const controller: Controller = {
 
   async updateUser(req, id) {
     const content = await getContentFromFile();
-    
+
     return new Promise((resolve, reject) => {
       if (content) {
         let body = '';
@@ -106,7 +106,9 @@ export const controller: Controller = {
         req.on('end', async () => {
           const parsedData: ResponseUser = JSON.parse(body);
 
-          const user: User | undefined = JSON.parse(content).find((user: User) => user.id === id);
+          const user: User | undefined = JSON.parse(content).find(
+            (user: User) => user.id === id,
+          );
 
           const users: User[] = JSON.parse(content).map((user: User) => {
             if (user.id === id) {

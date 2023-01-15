@@ -11,16 +11,14 @@
       "noFallthroughCasesInSwitch": true,
       "module": "esnext",
       "noImplicitAny": true,
-      "sourceMap": true,
+      "sourceMap": false,
       "moduleResolution": "node",
       "resolveJsonModule": true,
       "rootDir": "./src",
-      "isolatedModules": true,
-      "outDir": "./build",
-      "jsx": "react-jsx",
+      "outDir": "./dist",
       "baseUrl": "./src"
     },
-    "include": ["**/*.ts", "**/*.js"],
-    "exclude": ["node_modules"],
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "build/**/*", "src/__tests__/**/*"],
     "ts-node": {"esm": true}
   }

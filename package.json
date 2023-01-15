@@ -8,6 +8,7 @@
     "format": "npx eslint ./src --fix",
     "lint": "eslint ./src",
     "start:dev": "nodemon --experimental-specifier-resolution=node ./src/index.ts",
+    "start:multi": "nodemon --experimental-specifier-resolution=node ./src/cluster.ts",
     "start:prod": "tsc",
     "prettier": "prettier --write ./src",
     "test": "jest"

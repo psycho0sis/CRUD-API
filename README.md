@@ -10,7 +10,6 @@ To build the app - `npm run start:prod`
 To run tests - `npm run test`
 
 
-
 If you want to check how the server works use `Postman`
 
 **API**

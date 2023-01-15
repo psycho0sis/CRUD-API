@@ -61,5 +61,5 @@ export interface Controller {
   addUser(req: Request): Promise<void>,
   deleteUser(id: string): Promise<User[] | undefined>,
   getUser(id: string): Promise<User | undefined>,
-  updateUser(req: Request, id: string): Promise<User[] | undefined>,
+  updateUser(req: Request, id: string): Promise<void>,
 }

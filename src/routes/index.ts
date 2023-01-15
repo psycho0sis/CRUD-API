@@ -50,7 +50,7 @@ export const routes: RoutesWithDefault = {
         const result = await controller.getUser(id);
 
         res.writeHead(STATUS_CODES.SUCCESS, DEFAULT_HEADER);
-        res.end(JSON.stringify(result));
+        result && res.end(JSON.stringify(result));
       } catch {
         res.writeHead(STATUS_CODES.NOT_FOUND, DEFAULT_HEADER);
         res.end(JSON.stringify({ message: USER_NOT_FOUND }));

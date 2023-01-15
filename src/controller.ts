@@ -25,7 +25,7 @@ export const controller: Controller = {
   },
 
   async addUser(req) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       let body = '';
 
       req.on('data', data => {
@@ -43,9 +43,6 @@ export const controller: Controller = {
           const content = await getContentFromFile();
           const users = content ? JSON.parse(content).concat(user) : [user];
           await updateDB(users);
-        }
-
-        if (isDataACorrectUser(parsedData)) {
           resolve();
         } else {
           reject();
@@ -96,9 +93,9 @@ export const controller: Controller = {
   },
 
   async updateUser(req, id) {
-    return new Promise(async (resolve, reject) => {
-      const content = await getContentFromFile();
-
+    const content = await getContentFromFile();
+    
+    return new Promise((resolve, reject) => {
       if (content) {
         let body = '';
 
@@ -106,15 +103,12 @@ export const controller: Controller = {
           body += data;
         });
 
-        let users: User[] = [];
-        let user: User | undefined = undefined;
-
         req.on('end', async () => {
           const parsedData: ResponseUser = JSON.parse(body);
 
-          user = JSON.parse(content).find((user: User) => user.id === id);
+          const user: User | undefined = JSON.parse(content).find((user: User) => user.id === id);
 
-          users = JSON.parse(content).map((user: User) => {
+          const users: User[] = JSON.parse(content).map((user: User) => {
             if (user.id === id) {
               return { ...user, ...parsedData };
             }
@@ -124,9 +118,9 @@ export const controller: Controller = {
           await updateDB(users);
 
           if (user) {
-            resolve(users);
+            resolve();
           }
-          reject(users);
+          reject();
         });
       }
     });

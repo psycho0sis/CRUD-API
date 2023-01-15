@@ -15,6 +15,7 @@ const {
   USER_NOT_VALID,
   USER_WAS_UPDATED,
   ROUTE_NOT_FOUND,
+  DATA_NOT_CORRECT,
 } = RESPONSE_MESSAGES;
 
 export const getKeyForRoutes = (
@@ -60,10 +61,14 @@ export const routes: RoutesWithDefault = {
     }
   },
   POST_NEW_USER: async (req, res) => {
-    await controller.addUser(req);
-
-    res.writeHead(STATUS_CODES.CREATED_SUCCESS, DEFAULT_HEADER);
-    res.end(JSON.stringify({ message: USER_ADDED_TO_DATABASE }));
+    try {
+      await controller.addUser(req);
+      res.writeHead(STATUS_CODES.CREATED_SUCCESS, DEFAULT_HEADER);
+      res.end(JSON.stringify({ message: USER_ADDED_TO_DATABASE }));
+    } catch {
+      res.writeHead(STATUS_CODES.BAD_REQUEST, DEFAULT_HEADER);
+      res.end(JSON.stringify({ message: DATA_NOT_CORRECT }));
+    }
   },
   DELETE_USER: async (req, res, id) => {
     if (id && uuidValidation(id)) {

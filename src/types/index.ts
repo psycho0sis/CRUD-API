@@ -58,7 +58,7 @@ export type StatusCode = typeof STATUS_CODES[StatusCodeKeys];
 
 export interface Controller {
   getUsers(): Promise<User>,
-  addUser(req: Request): void,
+  addUser(req: Request): Promise<void>,
   deleteUser(id: string): Promise<User[] | undefined>,
   getUser(id: string): Promise<User | undefined>,
   updateUser(req: Request, id: string): Promise<User[] | undefined>,

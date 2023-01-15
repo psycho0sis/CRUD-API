@@ -14,6 +14,7 @@ export const RESPONSE_MESSAGES = {
   USER_NOT_VALID: 'UserId is not valid (not uuid)',
   USER_WAS_UPDATED: 'User was updated',
   ROUTE_NOT_FOUND: 'Route not found',
+  DATA_NOT_CORRECT: 'Request body does not contain required fields',
 };
 
 export const STATUS_CODES = {

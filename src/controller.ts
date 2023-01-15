@@ -2,7 +2,7 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { readFile } from 'fs/promises';
 
-import { getContentFromFile, updateDB } from './utils';
+import { getContentFromFile, updateDB, isDataACorrectUser } from './utils';
 import { Controller, User, ResponseUser } from './types';
 
 export const controller: Controller = {
@@ -25,22 +25,32 @@ export const controller: Controller = {
   },
 
   async addUser(req) {
-    let body = '';
+    return new Promise(async (resolve, reject) => {
+      let body = '';
 
-    req.on('data', data => {
-      body += data;
-    });
+      req.on('data', data => {
+        body += data;
+      });
 
-    req.on('end', async () => {
-      const parsedData: ResponseUser = JSON.parse(body);
+      req.on('end', async () => {
+        const parsedData: unknown = JSON.parse(body);
 
-      const user: User = {
-        id: uuidv4(),
-        ...parsedData,
-      };
-      const content = await getContentFromFile();
-      const users = content ? JSON.parse(content).concat(user) : [user];
-      await updateDB(users);
+        if (isDataACorrectUser(parsedData)) {
+          const user: User = {
+            id: uuidv4(),
+            ...parsedData,
+          };
+          const content = await getContentFromFile();
+          const users = content ? JSON.parse(content).concat(user) : [user];
+          await updateDB(users);
+        }
+
+        if (isDataACorrectUser(parsedData)) {
+          resolve();
+        } else {
+          reject();
+        }
+      });
     });
   },
 
@@ -120,5 +130,5 @@ export const controller: Controller = {
         });
       }
     });
-  }
+  },
 };

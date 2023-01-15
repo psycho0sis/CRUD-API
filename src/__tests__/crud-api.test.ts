@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals';
 import supertest from 'supertest';
 
-import { DEFAULT_HEADER, baseURL } from '../utils';
+import { DEFAULT_HEADER, baseURL, getContentFromFile } from '../utils';
 
 import { server, finishServerWorkForTest } from '..';
 
@@ -22,10 +22,33 @@ describe('CRUD API', () => {
     const response = await request
       .post(baseURL)
       .set(DEFAULT_HEADER)
-      .send({ user })
+      .send(user)
       .expect(201);
 
     expect(response.status).toBe(201);
+  });
+
+  test('Should get certain user', async () => {
+    const user = {
+      username: 'Gerald',
+      age: 50,
+      hobbies: ['kill monsters'],
+    };
+
+    const response = await request
+      .post(baseURL)
+      .set(DEFAULT_HEADER)
+      .send(user)
+      .expect(201);
+
+    expect(response.status).toBe(201);
+
+    const data = JSON.parse(await getContentFromFile() as string);
+    
+    const response2 = await request
+    .get(`${baseURL}/${data[0].id}`)
+
+    expect(response2.status).toBe(200);
   });
 
   test('Should answer --UserId is not valid--', async () => {

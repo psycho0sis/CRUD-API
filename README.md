@@ -2,6 +2,8 @@
 
 1. Git clone https://github.com/psycho0sis/CRUD-API.git
 2. Switch to the branch `crud-api`
+3. Run `npm i ts-node` (I forgot add it in my dependencies because I installed ts-node globally lately)
+4. Run `npm i`
 
 To run app in develop mode - `npm run start:dev`
 
